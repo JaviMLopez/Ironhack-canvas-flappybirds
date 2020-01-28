@@ -1,63 +1,81 @@
-window.onload = function() {
-  document.getElementById("start-button").onclick = function() {
+window.onload = function () {
+  document.getElementById("start-button").onclick = function () {
     startGame();
   };
 
   function startGame() {
     var img = new Image();
-img.src = "images/bg.png"
-var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
+    img.src = "images/bg.png"
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
 
-var backgroundImage = {
-  img: img,
-  x: 0,
-  speed: -1,
+    var backgroundImage = {
+      img: img,
+      x: 0,
+      speed: -1,
 
-  move: function() {
-    this.x += this.speed;
-    this.x %= canvas.width;
-  },
+      move: function () {
+        this.x += this.speed;
+        this.x %= canvas.width;
+      },
 
-  draw: function() {
-    ctx.drawImage(this.img, this.x, 0);
-    if (this.speed < 0) {
-      ctx.drawImage(this.img, this.x + canvas.width, 0);
-    } else {
-      ctx.drawImage(this.img, this.x - this.img.width, 0);
+      draw: function () {
+        ctx.drawImage(this.img, this.x, 0);
+        if (this.speed < 0) {
+          ctx.drawImage(this.img, this.x + canvas.width, 0);
+        } else {
+          ctx.drawImage(this.img, this.x - this.img.width, 0);
+        }
+      },
+    };
+
+    function updateCanvas() {
+      backgroundImage.move();
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      backgroundImage.draw();
+
+      requestAnimationFrame(updateCanvas);
     }
-  },
-};
 
-function updateCanvas() {
-  backgroundImage.move();
+    // start calling updateCanvas once the image is loaded
+    img.onload = updateCanvas;
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  backgroundImage.draw();
+    window.addEventListener("DOMContentLoaded", function () {
+      var image = document.getElementById("fab");
+      document.body.appendChild(canvas);
 
-  requestAnimationFrame(updateCanvas);
-}
+      canvas.width = image.width;
+      canvas.height = image.height;
 
-// start calling updateCanvas once the image is loaded
-img.onload = updateCanvas;
+      var context = canvas.getContext("2d");
 
-let fabby = {
-  width:10,
-  height:10,
-  speedX:10,
-  speedY:10,
-  gravity:10,
-  gravitySpeed:10,
-  update: () =>{
-    this.speedX = x;
-    this.speedY= y; 
-  },
-  newPos: () =>{
-    update();
+      context.drawImage(image, 0, 0);
+    });
+
+    let fabby = {
+      width: 10,
+      height: 10,
+      speedX: 10,
+      speedY: 10,
+      gravity: 10,
+      gravitySpeed: 10,
+      update: () => {
+        this.speedX = x;
+        this.speedY = y;
+      },
+      newPos: () => {
+        update();
+      }
+    }
+    document.body.onkeyup = function (e) {
+      if (e.keyCode == 32) {
+        fabby.gravity = fabby.gravity * -1;
+        console.log("flapped")
+
+      }
+
+
+    };
   }
 }
-
-
-  }
-
-};
