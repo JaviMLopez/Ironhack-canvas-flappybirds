@@ -41,33 +41,60 @@ window.onload = function () {
     // start calling updateCanvas once the image is loaded
     img.onload = updateCanvas;
 
-    window.addEventListener("DOMContentLoaded", function () {
-      var image = document.getElementById("fab");
-      document.body.appendChild(canvas);
+    // window.addEventListener("DOMContentLoaded", function () {
+    //   var image = document.getElementById("fab");
+    //  document.body.appendChild(canvas);
 
-      canvas.width = image.width;
-      canvas.height = image.height;
+    //   canvas.width = image.width;
+    //   canvas.height = image.height;
 
-      var context = canvas.getContext("2d");
+    //   var context = canvas.getContext("2d");
 
-      context.drawImage(image, 0, 0);
-    });
+    //   context.drawImage(image, 0, 0);
+    // });
 
-    let fabby = {
-      width: 10,
-      height: 10,
-      speedX: 10,
-      speedY: 10,
-      gravity: 10,
-      gravitySpeed: 10,
-      update: () => {
-        this.speedX = x;
-        this.speedY = y;
-      },
-      newPos: () => {
-        update();
+    // let fabby = {
+    //   width: 10,
+    //   height: 10,
+    //   speedX: 10,
+    //   speedY: 10,
+    //   gravity: 10,
+    //   gravitySpeed: 10,
+    //   update: () => {
+    //     this.speedX = x;
+    //     this.speedY = y;
+    //   },
+    //   newPos: () => {
+    //     update();
+    //   }
+    // }
+
+    const images = {
+      background: "./images/bg.png",
+      character: "./images/flappy.png",
+      obstacleBottom: "./images/obstacle_bottom.png",
+      obstacleTop: "./images/obstacle_top.png"
+    };
+
+    class Flappy {
+      constructor(){
+        this.x = 50;
+        this.y = 50;
+        this.width = 50;
+        this.height = 50;
+        this.img = new Image();
+        this.img.src = character
       }
+      
+      draw(){
+        this.y += 3
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+      }
+
     }
+
+    const flappy = new Flappy();
+    
     document.body.onkeyup = function (e) {
       if (e.keyCode == 32) {
         fabby.gravity = fabby.gravity * -1;
