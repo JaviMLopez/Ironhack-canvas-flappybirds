@@ -17,3 +17,11 @@ body button {
   border-radius: 5px;
   margin-bottom: 20px;
 }
+
+#canvas{
+  z-index: -1
+}
+
+#canvasFab{
+  z-index: 99999999999999;
+}
